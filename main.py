@@ -8,7 +8,7 @@ app = FastAPI()
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-@app.post("/upload-image/")
+@app.post("/upload-image/", tags=["Uploads"], summary="Envia uma imagem", description="Endpoint para fazer upload de uma imagem e salvar no servidor.")
 async def upload_image(file: UploadFile = File(...)):
     # Caminho onde o arquivo será salvo
     file_path = os.path.join(UPLOAD_DIR, file.filename)

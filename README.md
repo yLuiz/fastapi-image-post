@@ -27,9 +27,12 @@ app = FastAPI()
 UPLOAD_DIR = "uploads"
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
-@app.post("/upload-image/")
+@app.post("/upload-image/", tags=["Uploads"], summary="Envia uma imagem", description="Endpoint para fazer upload de uma imagem e salvar no servidor.")
 async def upload_image(file: UploadFile = File(...)):
+    # Caminho onde o arquivo será salvo
     file_path = os.path.join(UPLOAD_DIR, file.filename)
+
+    # Salva o arquivo no disco
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
@@ -39,11 +42,16 @@ async def upload_image(file: UploadFile = File(...)):
         "message": "Imagem enviada com sucesso!"
     }
 
+
 📦 4. Instale as dependências
 
 No terminal:
 
-pip install fastapi uvicorn
+pip install python-multipart fastapi uvicorn 
+
+ou, caso dê erro:
+
+python -m pip install python-multipart fastapi uvicorn
 
 🚀 5. Execute o servidor
 uvicorn main:app --reload
